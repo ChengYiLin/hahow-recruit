@@ -1,7 +1,12 @@
 import { FC } from "react";
+import styled from "styled-components";
+
+const Title = styled.div`
+    color: red;
+`;
 
 const App: FC = () => {
-    return <div className="text-red-500">Hello React 18</div>;
+    return <Title>Hello React 18</Title>;
 };
 
 export default App;
