@@ -19,7 +19,12 @@ async function fetcher<T>(url: string, config: RequestInit = {}): Promise<T> {
         return Promise.reject(res);
     }
 
-    return await res.json();
+    const contentType = res.headers.get('content-type');
+    if (contentType?.startsWith('text/plain')) {
+      return res.text() as T;
+    }
+
+    return res.json() as T;
 }
   
 
