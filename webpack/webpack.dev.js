@@ -7,5 +7,6 @@ module.exports = merge(base, {
         open: true,
         compress: true,
         port: 9010,
+        historyApiFallback: true,
     },
 });
