@@ -17,7 +17,7 @@ export const getHeroesList = async (): Promise<Types.IHeroInfo[]> => {
         });
         return result
     } catch(error) {
-        return Promise.reject(Error('Get Heroes Data Failed'))
+        return Promise.reject(new Error('Get Heroes Data Failed'))
     }
 }
 
@@ -36,7 +36,7 @@ export const getHeroInfo =  async (heroId: string): Promise<Types.IHeroInfo> => 
         });
         return result
     } catch(error) {
-        return Promise.reject(Error('Get Hero Info Failed'))
+        return Promise.reject(new Error('Get Hero Info Failed'))
     }
 }
 
@@ -55,12 +55,13 @@ export const getHeroProfile =  async (heroId: string): Promise<Types.IHeroProfil
         });
         return result
     } catch(error) {
-        return Promise.reject(Error('Get Hero Profile Failed'))
+        return Promise.reject(new Error('Get Hero Profile Failed'))
     }
 }
 
 /**
  * Update hero profile with the provided data
+ * 
  * @param {string} heroId - The ID of the hero.
  * @param {Types.IHeroProfile} data - The hero profile data to update
  * @return {Promise<string>} - Update Status
@@ -71,8 +72,14 @@ export const updateHeroProfile =  async (heroId: string, data: Types.IHeroProfil
             method: 'PATCH',
             body: JSON.stringify(data)
         });
+
+        if (result !== 'OK') {
+            throw new Error(result)
+        }
+
         return result
     } catch(error) {
-        return Promise.reject(Error('Update Hero Profile Failed'))
+        error?.message && console.error(error.message)
+        return Promise.reject(new Error('Update Hero Profile Failed'))
     }
 }
