@@ -19,7 +19,6 @@ const Logo = styled(Link)`
     font-size: 24px;
     font-weight: bolder;
     color: black;
-    text-decoration: none;
 `;
 
 const NavigationList = styled.nav`
@@ -28,7 +27,6 @@ const NavigationList = styled.nav`
 
 const NavigationItem = styled(NavLink)`
     color: black;
-    text-decoration: none;
 `;
 
 const Header: FC = () => {

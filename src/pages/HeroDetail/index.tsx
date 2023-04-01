@@ -1,7 +1,59 @@
 import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import styled from "styled-components";
+
+import ProfileAttribute from "../../components/ProfileAttribute";
 import { getHeroProfile, updateHeroProfile } from "../../services";
+import { getTotalPoints } from "../../utils/profileAttribute";
 import { IHeroProfile } from "../../types/service";
+
+const HeroDetailContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+
+    @media (min-width: ${(props) => props.theme.media.lg}) {
+        flex-direction: row;
+    }
+`;
+
+const ProfileSection = styled.div`
+    padding: 12px 0;
+
+    @media (min-width: ${(props) => props.theme.media.lg}) {
+        flex: 1 1 auto;
+    }
+`;
+
+const ProfileUpdateSection = styled(ProfileSection)`
+    @media (min-width: ${(props) => props.theme.media.lg}) {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
+`;
+
+const RemainPoints = styled.div`
+    padding-bottom: 24px;
+    text-align: right;
+`;
+
+const SubmitButton = styled.button<{ disabled: boolean }>`
+    display: block;
+    width: 100%;
+    padding: 6px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: ${(props) => !props.disabled && "pointer"};
+    background-color: ${(props) =>
+        props.disabled ? "gray" : props.theme.palette.primary.main};
+
+    @media (min-width: ${(props) => props.theme.media.lg}) {
+        width: 160px;
+        margin-left: auto;
+    }
+`;
 
 const HeroDetail: FC = () => {
     const [profile, setProfile] = useState<IHeroProfile>(null);
@@ -9,67 +61,55 @@ const HeroDetail: FC = () => {
 
     const { heroId } = useParams();
 
-    const handleUpdate = () => {
+    const handleSave = () => {
         updateHeroProfile(heroId, profile)
-            .then((res) => {
-                if (res === "OK") {
-                    alert("Update Success");
-                }
+            .then(() => {
+                alert("Update Success");
             })
             .catch((error) => {
-                if (error?.message) {
-                    alert(error.message);
-                } else {
-                    console.error(error);
-                }
+                error?.message && alert(error.message);
             });
     };
 
     useEffect(() => {
         getHeroProfile(heroId)
             .then((heroProfile) => {
-                const heroTotalPoints = Object.keys(heroProfile).reduce(
-                    (acc, cur: keyof IHeroProfile) => {
-                        return acc + heroProfile[cur];
-                    },
-                    0
-                );
-
                 setProfile(heroProfile);
-                setTotalPoint(heroTotalPoints);
+                setTotalPoint(getTotalPoints(heroProfile));
             })
             .catch((error) => {
-                if (error?.message) {
-                    alert(error.message);
-                } else {
-                    console.error(error);
-                }
+                error?.message && alert(error.message);
             });
     }, [heroId]);
 
-    const remainPoints = profile
-        ? totalPoint -
-          Object.keys(profile).reduce((acc, cur: keyof IHeroProfile) => {
-              return acc + profile[cur];
-          }, 0)
-        : 0;
+    const remainPoints = profile ? totalPoint - getTotalPoints(profile) : 0;
 
     return (
-        <div style={{ padding: "32px" }}>
-            <h1>HeroDetail {heroId}</h1>
-            <div>
-                <ul>
-                    <li>STR : {profile?.str}</li>
-                    <li>INT : {profile?.int}</li>
-                    <li>AGI : {profile?.agi}</li>
-                    <li>LUK : {profile?.luk}</li>
-                </ul>
-            </div>
-            <p>剩餘點數 : {remainPoints}</p>
-            <button type="button" onClick={handleUpdate}>
-                Update
-            </button>
-        </div>
+        <HeroDetailContainer>
+            <ProfileSection>
+                {!!profile &&
+                    ["str", "int", "agi", "luk"].map(
+                        (name: keyof IHeroProfile) => (
+                            <ProfileAttribute
+                                key={`${heroId}_${name}`}
+                                name={name}
+                                profileData={profile}
+                                setProfile={setProfile}
+                                disableAdd={remainPoints <= 0}
+                            />
+                        )
+                    )}
+            </ProfileSection>
+            <ProfileUpdateSection>
+                <RemainPoints>剩餘點數 : {remainPoints}</RemainPoints>
+                <SubmitButton
+                    disabled={remainPoints !== 0}
+                    onClick={handleSave}
+                >
+                    儲存
+                </SubmitButton>
+            </ProfileUpdateSection>
+        </HeroDetailContainer>
     );
 };
 
