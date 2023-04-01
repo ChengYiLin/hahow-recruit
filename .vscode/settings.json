@@ -5,5 +5,6 @@
     },
     // Use Prettier as default file formatter and formate on save
     "editor.defaultFormatter": "esbenp.prettier-vscode",
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "cSpell.words": ["Hahow"]
 }

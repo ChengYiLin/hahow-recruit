@@ -1,17 +1,14 @@
 import { FC } from "react";
-import styled from "styled-components";
+import { BrowserRouter } from "react-router-dom";
 import ResetCSS from "./styles/resetCSS";
-
-const Title = styled.div`
-    color: red;
-`;
+import AppRoutes from "./routes";
 
 const App: FC = () => {
     return (
-        <>
+        <BrowserRouter>
             <ResetCSS />
-            <Title>Hello React 18</Title>
-        </>
+            <AppRoutes />
+        </BrowserRouter>
     );
 };
 
