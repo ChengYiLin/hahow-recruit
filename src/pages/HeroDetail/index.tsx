@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 
+import Loading from "../../components/Loading";
 import ProfileAttribute from "../../components/ProfileAttribute";
 import { getHeroProfile, updateHeroProfile } from "../../services";
 import { getTotalPoints } from "../../utils/profileAttribute";
@@ -56,22 +57,26 @@ const SubmitButton = styled.button<{ disabled: boolean }>`
 `;
 
 const HeroDetail: FC = () => {
+    const [isLoading, setIsLoading] = useState(false);
     const [profile, setProfile] = useState<IHeroProfile>(null);
     const [totalPoint, setTotalPoint] = useState<number>(0);
 
     const { heroId } = useParams();
 
     const handleSave = () => {
+        setIsLoading(true);
         updateHeroProfile(heroId, profile)
             .then(() => {
                 alert("Update Success");
             })
             .catch((error) => {
                 error?.message && alert(error.message);
-            });
+            })
+            .finally(() => setIsLoading(false));
     };
 
     useEffect(() => {
+        setIsLoading(true);
         getHeroProfile(heroId)
             .then((heroProfile) => {
                 setProfile(heroProfile);
@@ -79,8 +84,13 @@ const HeroDetail: FC = () => {
             })
             .catch((error) => {
                 error?.message && alert(error.message);
-            });
+            })
+            .finally(() => setIsLoading(false));
     }, [heroId]);
+
+    if (isLoading) {
+        return <Loading isLoading={true} />;
+    }
 
     const remainPoints = profile ? totalPoint - getTotalPoints(profile) : 0;
 

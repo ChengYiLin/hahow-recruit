@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import styled from "styled-components";
 
 import HeroCard from "../../components/HeroCard";
+import Loading from "../../components/Loading";
 import { getHeroesList } from "../../services";
 import { IHeroInfo } from "../../types/service";
 
@@ -39,7 +40,7 @@ const Hero: FC = () => {
     }, []);
 
     if (isLoading) {
-        return <p>Loading ...</p>;
+        return <Loading isLoading={true} />;
     }
 
     return (
