@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { IHeroInfo } from "../../types/service";
 
 const HeroCardWrapper = styled.div<{ isSelected: boolean }>`
-    flex: 1 1 200px;
+    flex: 1 1 300px;
     padding: 8px;
     border: 1px solid black;
     box-sizing: border-box;
@@ -14,6 +14,14 @@ const HeroCardWrapper = styled.div<{ isSelected: boolean }>`
 
     background: ${(props) =>
         props.isSelected && props.theme.palette.secondary.main};
+
+    @media (min-width: ${(props) => props.theme.media.sm}) {
+        flex: 0 1 275px;
+    }
+
+    @media (min-width: ${(props) => props.theme.media.lg}) {
+        flex: 0 1 210px;
+    }
 `;
 
 const HeroImageContainer = styled.div<{ image: string }>`

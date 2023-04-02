@@ -6,6 +6,11 @@ import { Wrapper } from "../Container";
 const PageHeader = styled.header`
     flex: 0 0 60px;
     border-bottom: 1px solid black;
+    padding: 0 24px;
+
+    @media (min-width: ${(props) => props.theme.media.sm}) {
+        padding: 0;
+    }
 `;
 
 const HeadWrapper = styled(Wrapper)`
