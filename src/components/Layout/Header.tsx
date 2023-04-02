@@ -40,7 +40,7 @@ const Header: FC = () => {
             <HeadWrapper>
                 <Logo to="/">Martin</Logo>
                 <NavigationList>
-                    <NavigationItem to="/hero">Hero</NavigationItem>
+                    <NavigationItem to="/heroes">Hero</NavigationItem>
                 </NavigationList>
             </HeadWrapper>
         </PageHeader>

@@ -32,7 +32,7 @@ const Home: FC = () => {
         <div>
             <Title>Hi, I&apos;m Martin &#9995;</Title>
             <ButtonWrapper>
-                <GoDemoButton to="/hero">Go Demo</GoDemoButton>
+                <GoDemoButton to="/heroes">Go Demo</GoDemoButton>
             </ButtonWrapper>
         </div>
     );

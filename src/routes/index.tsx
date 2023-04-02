@@ -8,7 +8,7 @@ const AppRoutes: FC = () => {
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Pages.Home />} />
-                <Route path="hero" element={<Pages.Hero />}>
+                <Route path="heroes" element={<Pages.Hero />}>
                     <Route path=":heroId" element={<Pages.HeroDetail />} />
                 </Route>
                 <Route path="*" element={<Pages.PageNotFound />} />

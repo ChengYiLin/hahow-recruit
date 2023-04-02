@@ -52,7 +52,7 @@ const HeroCard: FC<IProps> = ({ id, name, image }) => {
         <HeroCardWrapper
             isSelected={+id === +heroId}
             onClick={() => {
-                navigate(`/hero/${id}`);
+                navigate(`/heroes/${id}`);
             }}
         >
             <HeroImageContainer image={image} />
