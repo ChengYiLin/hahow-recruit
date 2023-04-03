@@ -9,23 +9,22 @@
 async function fetcher<T>(url: string, config: RequestInit = {}): Promise<T> {
     const res = await fetch(url, {
         headers: {
-            'Content-Type': 'application/json',
+            "Content-Type": "application/json",
             ...config.headers,
         },
-        ...config
+        ...config,
     });
-    
+
     if (!res.ok) {
         return Promise.reject(res);
     }
 
-    const contentType = res.headers.get('content-type');
-    if (contentType?.startsWith('text/plain')) {
-      return res.text() as T;
+    const contentType = res.headers.get("content-type");
+    if (contentType?.startsWith("text/plain")) {
+        return res.text() as T;
     }
 
     return res.json() as T;
 }
-  
 
-export default fetcher
+export default fetcher;

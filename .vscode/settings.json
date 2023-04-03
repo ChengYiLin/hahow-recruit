@@ -1,10 +1,14 @@
 {
     // Auto-fix eslint errors on save
     "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": false
+        "source.fixAll.eslint": true
     },
     // Use Prettier as default file formatter and formate on save
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true,
+    "[typescript]": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
     "cSpell.words": ["Hahow"]
 }

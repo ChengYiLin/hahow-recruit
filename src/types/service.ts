@@ -4,7 +4,7 @@ export interface IHeroInfo {
     image: string;
 }
 
-export interface IHeroProfile{
+export interface IHeroProfile {
     str: number;
     int: number;
     agi: number;
